@@ -2,6 +2,9 @@ package campuslands.Inmobiliaria.repositories.entities;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -33,22 +36,27 @@ public class InmuebleEntity {
     private double precio;
     private String llaves;
 
+    @JsonIgnore
     @JoinColumn(name = "id_propietario")
     @ManyToOne(fetch = FetchType.LAZY)
     private PropietarioEntity propietario;
 
+    @JsonIgnore
     @JoinColumn(name = "id_zona")
     @ManyToOne(fetch = FetchType.LAZY)
     private ZonaEntity zona;
 
+    @JsonIgnore
     @JoinColumn(name = "id_oficina")
     @ManyToOne(fetch = FetchType.LAZY)
     private OficinaEntity oficina;
 
+    @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
     @JoinColumn(name = "id_tipo")
     @OneToOne(fetch = FetchType.LAZY)
     private TipoEntity tipo;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "inmueble", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<VisitaInmuebleEntity> visitas;
     
